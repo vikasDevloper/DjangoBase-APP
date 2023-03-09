@@ -49,3 +49,49 @@ class ProductView(APIView):
             registered_event_serializer.save()
         f.close()
         return api_response(status.HTTP_200_OK, "row inserted", data, 1)
+
+
+class LongestWord(APIView):
+    def get(self, request):
+        s_word = request.query_params.get("word")
+        word_json = ["sales", "look", "english", "leftabhish", "team", "estate", "box", "conditions"]
+        map = {}
+        for w in word_json:
+            char_array = list(s_word)
+            count = 0
+            c_array = list(w)
+            for c in c_array:
+                if c in char_array:
+                    char_array.remove(c)
+                    count = count + 1
+            map[w] = count
+        max = 0
+        for m in map:
+            if max < map[m]:
+                max = map[m]
+                val = m
+        return api_response(status.HTTP_200_OK, "data", val, 1)
+
+
+class SearchRecords(APIView):
+    def get(self, request):
+        s_word = request.query_params.get("product")
+        da = Product.objects.filter()
+        data = ProductViewSerializer(da, many=True)
+        map = {}
+        for w in data.data:
+            print(w["name"])
+            char_array = list(s_word)
+            count = 0
+            c_array = list(w["name"])
+            for c in c_array:
+                if c in char_array:
+                    char_array.remove(c)
+                    count = count + 1
+            map[w["name"]] = count
+        max = 0
+        for m in map:
+            if max < map[m]:
+                max = map[m]
+                val = m
+        return api_response(status.HTTP_200_OK, "data", val, 1)
