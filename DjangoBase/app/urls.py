@@ -1,8 +1,5 @@
+from app.product import ProductView
 from django.urls import path
 from django.urls.conf import include
 
-from app.product import ProductView
-
-urlpatterns = [
-    path("products", ProductView.as_view(), name="run.migrations"),
-]
+urlpatterns = [path("products", ProductView.as_view(), name="run.migrations")]

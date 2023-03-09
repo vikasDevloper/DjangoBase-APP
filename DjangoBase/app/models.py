@@ -7,7 +7,7 @@ from rest_framework import serializers
 
 class Product(models.Model):
     # lookup_types = (("work", "work"), ("okr", "okr"), ("script", "script"), ("web_service", "web_service"))
-    name = models.CharField(max_length=191, null=True, blank=True, unique=True)
+    name = models.CharField(max_length=191, null=True, blank=True)
     reference = models.AutoField(primary_key=True)
     volume = models.CharField(max_length=30, default="work", null=True)
 

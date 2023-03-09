@@ -1,3 +1,5 @@
+import json
+
 from app.models import Product, ProductViewSerializer
 from rest_framework import status
 from rest_framework.response import Response
@@ -32,4 +34,18 @@ class ProductView(APIView):
         registered_event_serializer = ProductViewSerializer(data=data)
         registered_event_serializer.is_valid(raise_exception=True)
         registered_event_serializer.save()
+        return api_response(status.HTTP_200_OK, "row inserted", data, 1)
+
+    def put(self, request):
+        f = open("/Users/abhishekgoswami/vikas/DjangoBase-APP/DjangoBase/app/product.json")
+        # with open("/Users/abhishekgoswami/vikas/DjangoBase-APP/DjangoBase/app/product.json", "r") as f:
+        print("hksjfk")
+        print(f)
+        #     data = json.load(f)
+        data = json.loads(f.read())
+        for d in data["products"]:
+            registered_event_serializer = ProductViewSerializer(data=d)
+            registered_event_serializer.is_valid(raise_exception=True)
+            registered_event_serializer.save()
+        f.close()
         return api_response(status.HTTP_200_OK, "row inserted", data, 1)
